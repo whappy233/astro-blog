@@ -20,7 +20,7 @@ const sortedTags = await getSortedTags()
         sortedTags.map(({ tag, count }) => (
           <Link
             href={`/tags/${tag}`}
-            class={badgeVariants({ variant: 'secondary' })}
+            class={badgeVariants({ variant: 'secondary' }) + ' text-sm'}
           >
             <Icon name="lucide:tag" class="size-4" />
             {tag}
