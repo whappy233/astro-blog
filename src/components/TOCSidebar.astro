@@ -3,6 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import type { TOCSection } from '@/lib/data-utils'
 import { getParentId, isSubpost } from '@/lib/data-utils'
 import { cn, getHeadingMargin } from '@/lib/utils'
+import { Icon } from 'astro-icon/components'
 
 type Props = {
   sections: TOCSection[]
@@ -27,7 +28,11 @@ const parentId = isCurrentSubpost ? getParentId(currentPostId) : currentPostId
         data-toc-scroll-area
       >
         <div class="flex flex-col gap-2 px-4">
-          <span class="text-lg font-medium">Table of Contents</span>
+          <Icon
+            name="lucide:table-of-contents"
+            class="size-4 flex-shrink-0"
+            aria-hidden="true"
+          />
           {sections.map((section, index) => {
             const isFirstSubpost =
               section.type === 'subpost' &&

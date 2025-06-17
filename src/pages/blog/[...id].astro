@@ -1,10 +1,8 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import Link from '@/components/Link.astro'
 import PostHead from '@/components/PostHead.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import SubpostsHeader from '@/components/SubpostsHeader.astro'
-import SubpostsSidebar from '@/components/SubpostsSidebar.astro'
 import TOCHeader from '@/components/TOCHeader.astro'
 import TOCSidebar from '@/components/TOCSidebar.astro'
 import { badgeVariants } from '@/components/ui/badge'
@@ -78,7 +76,7 @@ const tocSections = await getTOCSections(currentPostId)
   }
 
   <section
-    class="grid grid-cols-[minmax(0px,1fr)_min(calc(var(--breakpoint-md)-2rem),100%)_minmax(0px,1fr)] gap-y-6"
+    class="grid grid-cols-[minmax(0px,1fr)_min(calc(var(--breakpoint-md)-2rem),100%)_minmax(0px,1fr)] gap-y-10"
   >
     <div class="col-start-2">
       <Breadcrumbs
@@ -108,18 +106,6 @@ const tocSections = await getTOCSections(currentPostId)
       />
     </div>
 
-    {
-      post.data.image && (
-        <Image
-          src={post.data.image}
-          alt={post.data.title}
-          width={750}
-          height={350}
-          class="col-span-full mx-auto w-full max-w-5xl object-cover"
-        />
-      )
-    }
-
     <section class="col-start-2 flex flex-col gap-y-6 text-center">
       <div class="flex flex-col">
         <h1 id="post-title" class="mb-2 scroll-mt-31 text-3xl leading-tight font-medium sm:text-4xl">
@@ -129,10 +115,12 @@ const tocSections = await getTOCSections(currentPostId)
         <div class="text-muted-foreground divide-border mb-4 flex flex-col items-center justify-center divide-y text-xs sm:flex-row sm:flex-wrap sm:divide-x sm:divide-y-0 sm:text-sm">
 
           <div class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0">
+            <Icon name="lucide:calendar-days" class="size-4" />
             <span>{formatDate(post.data.date)}</span>
           </div>
 
           <div class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0">
+            <Icon name="lucide:clock" class="size-4" />
             <span>
               {postReadingTime}
               {
@@ -150,7 +138,7 @@ const tocSections = await getTOCSections(currentPostId)
           {
             subpostCount > 0 && (
               <div class="flex w-full items-center justify-center gap-1 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0">
-                <Icon name="lucide:file-text" class="size-3" />
+                <Icon name="lucide:file-text" class="size-4" />
                 {subpostCount} subpost{subpostCount === 1 ? '' : 's'}
               </div>
             )
@@ -165,7 +153,7 @@ const tocSections = await getTOCSections(currentPostId)
                   href={`/tags/${tag}`}
                   class={badgeVariants({ variant: 'secondary' })}
                 >
-                  <Icon name="lucide:hash" class="size-3" />
+                  <Icon name="lucide:tag" class="size-4" />
                   {tag}
                 </a>
               ))
@@ -184,17 +172,6 @@ const tocSections = await getTOCSections(currentPostId)
     <article class="prose col-start-2 max-w-none">
       <Content />
     </article>
-
-    {
-      (hasChildPosts || isCurrentSubpost) && (
-        <SubpostsSidebar
-          parentId={
-            isCurrentSubpost ? getParentId(currentPostId) : currentPostId
-          }
-          className="w-64"
-        />
-      )
-    }
 
     <PostNavigation
       newerPost={navigation.newer}
