@@ -2,7 +2,7 @@ import type { IconMap, SocialLink, Site } from '@/types'
 
 export const SITE: Site = {
   title: "日月星辰",
-  description: 'Bolg description',
+  description: '明明天边月, 常照海中天',
   href: 'https://astro-erudite.vercel.app',
   author: 'Carlos',
   locale: 'zh-CN',

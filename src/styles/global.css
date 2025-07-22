@@ -10,6 +10,8 @@
     Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 
+  --font-calligraphy: Calligraphy;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -65,6 +67,15 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Calligraphy';
+  src: url('/fonts/ZhiMangXing-Regular.ttf') format('woff2-variations');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -99,6 +110,8 @@
   --bg-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, rgba(0, 0, 0, 0) 1px), linear-gradient(rgba(255, 255, 255, 0.04) 1px, rgba(0, 0, 0, 0) 1px);
 }
 
+
+/* @layer base 在整个项目中全局应用样式 */
 @layer base {
   *,
   ::after,
@@ -107,4 +120,35 @@
   ::file-selector-button {
     @apply border-border outline-ring/50 tracking-tight;
   }
+  /* body {
+    @apply bg-bg;
+  } */
+  /* h1 {
+    font-size: 2.5rem;
+  } */
+}
+
+
+/* @layer utilities 针对各个属性的原子样式 */
+/* <div class="bg-size-7 bg-img-gradient"> */
+/* @layer utilities {
+  .bg-size-7 {
+    background-size: 7px 7px;
+  }
+  .bg-img-gradient { 
+    background-image: var(--bg-image);
+  }
+}  */
+
+
+/* @layer components 设置特定元素的样式 */
+/* <div class="bg-giid"> */
+@layer components { 
+  .bg-giid {
+    background-size: 7px 7px;
+    background-image: var(--bg-image);
+  }
+  /* .xxx {
+    @apply bg-amber-50 text-4xl;
+  } */
 }
