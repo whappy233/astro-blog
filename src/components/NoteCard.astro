@@ -12,10 +12,10 @@ const { note } = Astro.props
 const { Content } = await render(note)
 ---
 
-<div class="bg-secondary/50 border overflow-auto rounded-xl transition-colors duration-300 ease-in-out">
-    <div class="max-h-[30rem] overflow-y-auto p-4 pt-0">
-      <h2 id="note-title" class="sticky top-0 z-10 py-4 backdrop-blur-sm text-xl font-medium">{note.data.title}</h2>
-      <div class="flex flex-wrap mb-4 gap-2 px-1">
+<div class="bg-secondary/50 border overflow-auto rounded-xl">
+  <h2 id="note-title" class="bg-secondary sticky top-0 z-10 px-4 py-2 text-lg font-medium">{note.data.title}</h2>
+  <div class="max-h-[30rem] overflow-y-auto p-4">
+    <div class="flex flex-wrap mb-4 gap-2 px-1">
       {
         note.data.tags &&
           note.data.tags.length > 0 &&
@@ -27,8 +27,8 @@ const { Content } = await render(note)
           ))
       }
     </div>
-      <article class="prose col-start-2 max-w-none px-1">
-        <Content />
-      </article>
-    </div>
+    <article class="prose col-start-2 max-w-none px-1">
+      <Content />
+    </article>
+  </div>
 </div>

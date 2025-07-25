@@ -17,7 +17,7 @@ const readTime = await getCombinedReadingTime(post.id)
 const subpostCount = !isSubpost(post.id) ? await getSubpostCount(post.id) : 0
 ---
 
-<div class="bg-secondary/50 hover:bg-secondary/70 rounded-xl border p-4 transition-colors duration-300 ease-in-out">
+<div class="bg-secondary/50 hover:bg-secondary rounded-xl border p-4 transition-colors duration-300 ease-in-out">
   <Link
     href={`/blogs/${post.id}`}
     class="flex flex-col gap-4 sm:flex-row"
