@@ -1,8 +1,8 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content'
 import { readingTime, calculateWordCountFromHtml } from '@/lib/utils'
 
-export async function getAllAuthors(): Promise<CollectionEntry<'authors'>[]> {
-  return await getCollection('authors')
+export async function getAllAuthors(): Promise<CollectionEntry<'author'>[]> {
+  return await getCollection('author')
 }
 
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
@@ -15,14 +15,12 @@ export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
 export async function getAllPostsAndSubposts(): Promise<
   CollectionEntry<'blog'>[]
 > {
-  const posts = await getCollection('blog')
-  return posts
-    .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  const posts = await getCollection('blog', post => !post.data.draft)
+  return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }
 
-export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
-  const projects = await getCollection('projects')
+export async function getAllProjects(): Promise<CollectionEntry<'project'>[]> {
+  const projects = await getCollection('project')
   return projects.sort((a, b) => {
     const dateA = a.data.startDate?.getTime() || 0
     const dateB = b.data.startDate?.getTime() || 0
@@ -30,9 +28,15 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
   })
 }
 
+export async function getAllNotes(): Promise<CollectionEntry<'note'>[]> {
+  const notes = await getCollection('note', note => !note.data.draft)
+  return notes.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+}
+
 export async function getAllTags(): Promise<Map<string, number>> {
-  const posts = await getAllPosts()
-  return posts.reduce((acc, post) => {
+  const [posts, notes] = await Promise.all([getAllPosts(), getAllNotes()]);
+  const articles = [...posts, ...notes]
+  return articles.reduce((acc, post) => {
     post.data.tags?.forEach((tag) => {
       acc.set(tag, (acc.get(tag) || 0) + 1)
     })
@@ -113,6 +117,21 @@ export async function getPostsByTag(
   return posts.filter((post) => post.data.tags?.includes(tag))
 }
 
+export async function getNotesByTag(
+  tag: string,
+): Promise<CollectionEntry<'note'>[]> {
+  const notes = await getAllNotes()
+  return notes.filter((note) => note.data.tags?.includes(tag))
+}
+
+export async function getArticlesByTag(
+  tag: string,
+): Promise<(CollectionEntry<'blog'> | CollectionEntry<'note'>)[]> {
+  const [posts, notes] = await Promise.all([getPostsByTag(tag), getNotesByTag(tag)]);
+  return [...posts, ...notes]
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+}
+
 export async function getRecentPosts(
   count: number,
 ): Promise<CollectionEntry<'blog'>[]> {
@@ -157,13 +176,13 @@ export async function getSubpostsForParent(
     })
 }
 
-export function groupPostsByYear(
-  posts: CollectionEntry<'blog'>[],
-): Record<string, CollectionEntry<'blog'>[]> {
-  return posts.reduce(
-    (acc: Record<string, CollectionEntry<'blog'>[]>, post) => {
-      const year = post.data.date.getFullYear().toString()
-      ;(acc[year] ??= []).push(post)
+export function groupArticlesByYear<T extends CollectionEntry<'blog'> | CollectionEntry<'note'>>(
+  articles: T[],
+): Record<string, T[]> {
+  return articles.reduce(
+    (acc: Record<string, T[]>, article) => {
+      const year = article.data.date.getFullYear().toString()
+      ;(acc[year] ??= []).push(article)
       return acc
     },
     {},
@@ -301,4 +320,9 @@ export async function getTOCSections(postId: string): Promise<TOCSection[]> {
   }
 
   return sections
+}
+
+export async function getAllGalleries(): Promise<CollectionEntry<'gallery'>[]> {
+  const galleries = await getCollection('gallery', gallery => gallery.data.published)
+  return galleries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }

@@ -44,7 +44,7 @@ const authorPosts = await getPostsByAuthor(author.id)
             .filter((post) => !post.data.draft)
             .map((post) => (
               <li>
-                <BlogCard entry={post} />
+                <BlogCard post={post} />
               </li>
             ))}
         </ul>

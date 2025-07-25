@@ -1,0 +1,30 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PhotoCard from '@/components/PhotoCard.astro'
+// import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+// import { badgeVariants } from '@/components/ui/badge'
+import Layout from '@/layouts/Layout.astro'
+// import { Icon } from 'astro-icon/components'
+import { getAllGalleries } from '@/lib/data-utils'
+
+const galleries = await getAllGalleries()
+---
+
+<Layout class="max-w-3xl">
+  <PageHead slot="head" title="Photos" />
+  <Breadcrumbs items={[{ label: 'Photos', icon: 'lucide:aperture' }]} />
+  {
+    galleries.length > 0 ? (
+      <ul class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 justify-stretch">
+        {galleries.map((gallery) => (
+          <li class="w-full">
+            <PhotoCard gallery={gallery} />
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="text-muted-foreground text-center">No Gallery found.</p>
+    )
+  }
+</Layout>

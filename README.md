@@ -26,11 +26,11 @@ Below are some fantastic examples of websites based on this template. If you wis
 
 | Site                                          | Author                                             | Description/Features                                                                         | Source                                                 |
 | --------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| [enscribe.dev](https://enscribe.dev)          | [@jktrn](https://github.com/jktrn)                 | Heavily modified bento-style homepage with client interactivity, with custom MDX components! | [→](https://github.com/jktrn/enscribe.dev)             |
+| [carlos.dev](https://carlos.dev)          | [@jktrn](https://github.com/jktrn)                 | Heavily modified bento-style homepage with client interactivity, with custom MDX components! | [→](https://github.com/jktrn/carlos.dev)             |
 | [emile.sh](https://emile.sh)                  | [@echoghi](https://github.com/echoghi)             | A minimalist personal blog using the [flexoki](https://stephango.com/flexoki) theme          | [→](https://github.com/echoghi/v5)                     |
 | [decentparadox.me](https://decentparadox.me)  | [@decentparadox](https://github.com/decentparadox) | A heavily customized personal portfolio with a sci-fi theme!                                 | [→](https://github.com/decentparadox/decentparadox.me) |
 | [flocto.github.io](https://flocto.github.io/) | [@flocto](https://github.com/flocto)               | A slightly modified personal blog                                                            | [→](https://github.com/flocto/flocto.github.io)        |
-| [dumbprism.me](https://www.dumbprism.me/)     | [@dumbprism](https://github.com/dumbprism)         | A customized portfolio inspired by enscribe's bento grid style adding my gist of UI          | [→](https://github.com/dumbprism/dumbprism-portfolio)  |
+| [dumbprism.me](https://www.dumbprism.me/)     | [@dumbprism](https://github.com/dumbprism)         | A customized portfolio inspired by carlos's bento grid style adding my gist of UI          | [→](https://github.com/dumbprism/dumbprism-portfolio)  |
 | [hyuki.dev](https://hyuki.dev/)               | [@snow0406](https://github.com/snow0406)           | A minimalist blog with a blue color scheme, focusing on simplicity!                          | [→](https://github.com/Snow0406/hyuki.dev)             |
 | [ldd.cc](https://ldd.cc/)                     | [@xJoyLu](https://github.com/xjoylu)               | The cream of the idlers.                                                                     | [→](https://ldd.cc/)                                   |
 | [rezarezvan.com](https://rezarezvan.com/)     | [@rezaarezvan](https://github.com/rezaarezvan)     | A academic blog with personal touches :).                                                    | [→](https://rezarezvan.com/)                           |
@@ -108,8 +108,8 @@ export const SITE: Site = {
   title: 'astro-erudite',
   description: // ...
   href: 'https://astro-erudite.vercel.app',
-  featuredPostCount: 2,
-  postsPerPage: 3,
+  recentPostCount: 2,
+  pageSize: 3,
 }
 
 export const NAV_LINKS: SocialLink[] = [
@@ -206,14 +206,14 @@ Add author information in `src/content/authors/` as Markdown files. A file named
 
 ```yml
 ---
-name: 'enscribe'
+name: 'carlos'
 pronouns: 'he/him'
 avatar: 'https://gravatar.com/avatar/9bfdc4ec972793cf05cb91efce5f4aaaec2a0da1bf4ec34dad0913f1d845faf6.webp?size=256'
 bio: 'd(-_-)b'
-website: 'https://enscribe.dev'
+website: 'https://carlos.dev'
 twitter: 'https://twitter.com/enscry'
 github: 'https://github.com/jktrn'
-mail: 'jason@enscribe.dev'
+mail: 'jason@carlos.dev'
 ---
 ```
 
@@ -281,7 +281,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Built with &hearts; by [enscribe](https://enscribe.dev)!
+Built with &hearts; by [carlos](https://carlos.dev)!
 
 [Stargazers]: https://img.shields.io/github/stars/jktrn/astro-erudite?color=fafafa&logo=github&logoColor=fff&style=for-the-badge
 [License]: https://img.shields.io/github/license/jktrn/astro-erudite?color=0a0a0a&logo=github&logoColor=fff&style=for-the-badge

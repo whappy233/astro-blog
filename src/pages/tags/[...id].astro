@@ -1,9 +1,10 @@
 ---
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import NoteCard from '@/components/NoteCard.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getAllTags, getPostsByTag } from '@/lib/data-utils'
+import { getAllTags, getArticlesByTag } from '@/lib/data-utils'
 
 export async function getStaticPaths() {
   const tagMap = await getAllTags()
@@ -11,26 +12,26 @@ export async function getStaticPaths() {
 
   return Promise.all(
     uniqueTags.map(async (tag) => {
-      const posts = await getPostsByTag(tag)
+      const articles = await getArticlesByTag(tag)
       return {
         params: { id: tag },
         props: {
           tag,
-          posts,
+          articles
         },
       }
     }),
   )
 }
 
-const { tag, posts } = Astro.props
+const { tag, articles } = Astro.props
 ---
 
 <Layout class="max-w-3xl">
   <PageHead
     slot="head"
-    title={`Posts tagged with "${tag}"`}
-    description={`A collection of posts tagged with ${tag}.`}
+    title={`Posts and Notes tagged with "${tag}"`}
+    description={`A collection of posts and notes tagged with ${tag}.`}
     noindex
   />
   <Breadcrumbs
@@ -39,14 +40,17 @@ const { tag, posts } = Astro.props
       { label: tag, icon: 'lucide:tag' },
     ]}
   />
-
   <ul class="flex flex-col gap-y-4">
-    {
-      posts.map((post) => (
-        <li>
-          <BlogCard entry={post} />
-        </li>
-      ))
+    { 
+      articles.map(article => {
+        if (article.collection === 'blog') {
+          return <li><BlogCard post={article}/></li>
+        }
+        if (article.collection === 'note') {
+          return <li><NoteCard note={article}/></li>
+        }
+        return null
+      })
     }
   </ul>
 </Layout>

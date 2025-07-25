@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { render } from 'astro:content'
+import { Icon } from 'astro-icon/components'
+import { badgeVariants } from '@/components/ui/badge'
+
+interface Props {
+  note: CollectionEntry<'note'>
+}
+
+const { note } = Astro.props
+const { Content } = await render(note)
+---
+
+<div class="bg-secondary/50 border overflow-auto rounded-xl transition-colors duration-300 ease-in-out">
+    <div class="max-h-[30rem] overflow-y-auto p-4 pt-0">
+      <h2 id="note-title" class="sticky top-0 z-10 py-4 backdrop-blur-sm text-xl font-medium">{note.data.title}</h2>
+      <div class="flex flex-wrap mb-4 gap-2 px-1">
+      {
+        note.data.tags &&
+          note.data.tags.length > 0 &&
+          note.data.tags.map((tag) => (
+            <a href={`/tags/${tag}`} class={badgeVariants({ variant: 'outline' })}>
+              <Icon name="lucide:tag" class="size-4" />
+              {tag}
+            </a>
+          ))
+      }
+    </div>
+      <article class="prose col-start-2 max-w-none px-1">
+        <Content />
+      </article>
+    </div>
+</div>

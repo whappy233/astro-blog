@@ -1,0 +1,34 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getAllGalleries } from '@/lib/data-utils'
+import { glob } from 'astro/loaders';
+
+export async function getStaticPaths() {
+  const galleries = await getAllGalleries()
+  return galleries.map((gallery) => ({
+    params: { id: gallery.id },
+    props: { gallery },
+  }))
+}
+
+const { gallery } = Astro.props
+// const c = await glob({pattern: "*.*(png,jpg,jpeg)", base: gallery.data.assets}).load()
+---
+
+<Layout class="max-w-3xl">
+  <PageHead
+    slot="head"
+    title={`${gallery.data.name} (Gallery)`}
+    description={`${gallery.data.name} (Gallery)`}
+    noindex
+  />
+  <Breadcrumbs
+    items={[
+      { href: '/gallery', label: 'Photos', icon: 'lucide:aperture' },
+      { label: gallery.data.name, icon: 'lucide:images' },
+    ]}
+  />
+  {gallery.data.name}
+</Layout>

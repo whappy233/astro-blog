@@ -8,24 +8,24 @@ import type { CollectionEntry } from 'astro:content'
 import Link from './Link.astro'
 
 interface Props {
-  entry: CollectionEntry<'blog'>
+  post: CollectionEntry<'blog'>
 }
 
-const { entry } = Astro.props
-const formattedDate = formatDate(entry.data.date)
-const readTime = await getCombinedReadingTime(entry.id)
-const subpostCount = !isSubpost(entry.id) ? await getSubpostCount(entry.id) : 0
+const { post } = Astro.props
+const formattedDate = formatDate(post.data.date)
+const readTime = await getCombinedReadingTime(post.id)
+const subpostCount = !isSubpost(post.id) ? await getSubpostCount(post.id) : 0
 ---
 
 <div class="bg-secondary/50 hover:bg-secondary/70 rounded-xl border p-4 transition-colors duration-300 ease-in-out">
   <Link
-    href={`/${entry.collection}/${entry.id}`}
+    href={`/blogs/${post.id}`}
     class="flex flex-col gap-4 sm:flex-row"
   >
 
     <div class="grow">
-      <h3 class="mb-1 text-lg font-medium">{entry.data.title}</h3>
-      <p class="text-muted-foreground mb-2 text-sm">{entry.data.description}</p>
+      <h3 class="mb-1 text-lg font-medium">{post.data.title}</h3>
+      <p class="text-muted-foreground mb-2 text-sm">{post.data.description}</p>
 
       <div
         class="text-muted-foreground mb-4 flex flex-wrap items-center gap-x-2 text-xs"
@@ -49,9 +49,9 @@ const subpostCount = !isSubpost(entry.id) ? await getSubpostCount(entry.id) : 0
       </div>
 
       {
-        entry.data.tags && (
+        post.data.tags && (
           <div class="flex flex-wrap gap-2">
-            {entry.data.tags.map((tag) => (
+            {post.data.tags.map((tag) => (
               <Badge variant="secondary" className="flex items-center gap-x-1 text-foreground/50">
                 <Icon name="lucide:tag" class="size-3" />
                 {tag}

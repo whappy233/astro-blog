@@ -2,7 +2,7 @@ import { glob } from 'astro/loaders'
 import { defineCollection, z } from 'astro:content'
 
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blogs' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -16,7 +16,7 @@ const blog = defineCollection({
     }),
 })
 
-const authors = defineCollection({
+const author = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/authors' }),
   schema: z.object({
     name: z.string(),
@@ -32,7 +32,7 @@ const authors = defineCollection({
   }),
 })
 
-const projects = defineCollection({
+const project = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: ({ image }) =>
     z.object({
@@ -46,4 +46,30 @@ const projects = defineCollection({
     }),
 })
 
-export const collections = { blog, authors, projects }
+const note = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/notes' }),
+  schema: z.object({
+      title: z.string(),
+      date: z.coerce.date(),
+      order: z.number().optional(),
+      tags: z.array(z.string()).optional(),
+      authors: z.array(z.string()).optional(),
+      draft: z.boolean().optional(),
+    }),
+})
+
+const gallery = defineCollection({
+  // 这里可以根据需要保留文件加载逻辑，若仅需子目录名可省略
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/gallery' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      assets: z.string(),
+      image: image().optional(),
+      date: z.coerce.date(),
+      published: z.boolean().default(true),
+    })
+});
+
+
+export const collections = { blog, author, project, note, gallery }

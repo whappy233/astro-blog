@@ -7,7 +7,7 @@ import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { getRecentPosts } from '@/lib/data-utils'
 
-const blog = await getRecentPosts(SITE.featuredPostCount)
+const blog = await getRecentPosts(SITE.recentPostCount)
 ---
 
 <Layout class="max-w-3xl">
@@ -15,10 +15,10 @@ const blog = await getRecentPosts(SITE.featuredPostCount)
   <section class="flex flex-col gap-y-4">
     <h2 class="text-2xl font-medium">Latest posts</h2>
     <ul class="flex flex-col gap-y-4">
-      { blog.map((post) => (<li><BlogCard entry={post} /></li>))}
+      { blog.map((post) => (<li><BlogCard post={post} /></li>))}
     </ul>
     <div class="flex justify-center text-foreground/50">
-      <Link href="/blog" class={buttonVariants({ variant: 'ghost' }) + ' group'} >
+      <Link href="/blogs" class={buttonVariants({ variant: 'ghost' }) + ' group'} >
         See all posts
         <span class="ml-1.5 transition-transform group-hover:translate-x-1">&rarr;</span>
       </Link>

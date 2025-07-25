@@ -6,25 +6,25 @@ export const SITE: Site = {
   href: 'https://astro-erudite.vercel.app',
   author: 'Carlos',
   locale: 'zh-CN',
-  featuredPostCount: 3,
-  postsPerPage: 10,
+  recentPostCount: 3,
+  pageSize: 10,
 }
 
 export const NAV_LINKS: SocialLink[] = [
   {
-    href: '/blog',
+    href: '/blogs',
     label: 'Blog',
+  },
+  {
+    href: '/notes',
+    label: 'Note',
   },
   {
     href: '/tags',
     label: 'Tags',
   },
   {
-    href: '/notes',
-    label: 'Notes',
-  },
-  {
-    href: '/photos',
+    href: '/gallery',
     label: 'Photos',
   },
   {
