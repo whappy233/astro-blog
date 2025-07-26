@@ -1,6 +1,7 @@
 ---
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Empty from '@/components/Empty.astro'
 import PageHead from '@/components/PageHead.astro'
 import PaginationComponent from '@/components/ui/pagination'
 import { SITE } from '@/consts'
@@ -23,7 +24,7 @@ const postsByYear = groupArticlesByYear(page.data)
 const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
 ---
 
-<Layout class="max-w-3xl">
+<Layout class="max-w-4xl">
   <PageHead slot="head" title="Blog" />
   <Breadcrumbs
     items={[
@@ -34,18 +35,22 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
 
   <div class="flex min-h-[calc(100vh-18rem)] flex-col gap-y-8">
     {
-      years.map((year) => (
-        <section class="flex flex-col gap-y-4">
-          <div class="font-medium">{year}</div>
-          <ul class="flex flex-col gap-4">
-            {postsByYear[year].map((post) => (
-              <li>
-                <BlogCard post={post} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))
+      years.length > 0 ? (
+        years.map(year => (
+          <section class="flex flex-col gap-y-4">
+            <div class="font-medium">{year}</div>
+            <ul class="flex flex-col gap-4">
+              {postsByYear[year].map((post) => (
+                <li>
+                  <BlogCard post={post} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      ) : (
+        <Empty text="No Blogs found."/>
+      )
     }
   </div>
 

@@ -1,14 +1,17 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import PhotoCard from '@/components/PhotoCard.astro'
+import Empty from '@/components/Empty.astro'
+import GalleryCard from '@/components/GalleryCard.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllGalleries } from '@/lib/data-utils'
 
 const galleries = await getAllGalleries()
+// const base = import.meta.env.BASE_URL;  // '/'
+
 ---
 
-<Layout class="max-w-3xl">
+<Layout class="max-w-4xl">
   <PageHead slot="head" title="Photos" />
   <Breadcrumbs items={[{ label: 'Photos', icon: 'lucide:aperture' }]} />
   {
@@ -16,12 +19,12 @@ const galleries = await getAllGalleries()
       <ul class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 justify-stretch">
         {galleries.map((gallery) => (
           <li class="w-full">
-            <PhotoCard gallery={gallery} />
+            <GalleryCard gallery={gallery} />
           </li>
         ))}
       </ul>
     ) : (
-      <p class="text-muted-foreground text-center">No Gallery found.</p>
+      <Empty text="No Gallery found." cccc={true} />
     )
   }
 </Layout>

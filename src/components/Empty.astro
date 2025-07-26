@@ -1,0 +1,27 @@
+---
+import { cn } from '@/lib/utils'
+
+interface Props {
+  text: string
+  class?: string
+  cccc?: boolean
+  [key: string]: any
+}
+
+const { text, class: className, cccc, ...rest } = Astro.props
+---
+
+<div>
+  <p class="text-muted-foreground text-center">{text}</p>
+  <div
+    class={cn(
+      'bg-sky-400',
+      cccc &&
+        'text-yellow-300',
+      className,
+    )}
+    {...rest}
+  >
+    <slot />
+  </div>
+</div>

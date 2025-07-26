@@ -1,10 +1,14 @@
 ---
+import 'glightbox/dist/css/glightbox.css';
+import '@/styles/glightbox-custom.css'
+import path from 'path'
+import Empty from '@/components/Empty.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllGalleries } from '@/lib/data-utils'
-import { Image, getImage } from 'astro:assets'
-import type { ImageMetadata } from "astro";
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
 
 export async function getStaticPaths() {
   const galleries = await getAllGalleries()
@@ -15,13 +19,15 @@ export async function getStaticPaths() {
 }
 
 const { gallery } = Astro.props
-
-const images = import.meta.glob<{ default: ImageMetadata }>("/src/content/gallery/assets/gallery-1/*.png");
-const imagePaths = Object.keys(images).filter(imagePath => imagePath.startsWith("/src/content/"));
-const imgs = Object.values(import.meta.glob('/src/content/gallery/assets/gallery-1/*.png', { eager: true }));
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/content/gallery/assets/**/*.{jpg,jpeg,png,gif}',
+)
+const imagePaths = Object.keys(images).filter(imagePath =>
+  imagePath.includes(gallery.data.assetsName),
+)
 ---
 
-<Layout class="max-w-3xl">
+<Layout class="max-w-4xl">
   <PageHead
     slot="head"
     title={`${gallery.data.name} (Gallery)`}
@@ -34,36 +40,34 @@ const imgs = Object.values(import.meta.glob('/src/content/gallery/assets/gallery
       { label: gallery.data.name, icon: 'lucide:images' },
     ]}
   />
-  {gallery.data.name}
-
-  <div id="main">
-    {
-      imagePaths.map(async (imagePath) => {
-        const image = images[imagePath]()
-        const optimizedImage = await getImage({
-          src: image,
-          width: 100,
+	<section class="py-16 pt-8">
+		<div class="container-custom">
+      <section id="photo-grid" class="relative w-full mx-auto overflow-hidden">
+      {
+        imagePaths.map(async imagePath => {
+          const image = images[imagePath]()
+          return (<a
+            href={imagePath}
+            class="photo-item glightbox absolute transition-transform hover:scale-[1.02] hover:z-10"
+            data-gallery="gallery1"
+            data-type="image"
+            data-glightbox={path.basename(imagePath)}
+          >
+            <Image
+              src={image}
+              quality={10}
+              format="webp"
+              class="w-full h-full object-cover rounded-sm shadow-sm hover:shadow-lg transition-shadow"
+              alt={path.basename(imagePath)}
+            />
+          </a>)
         })
-
-        return (
-          <article class="thumb">
-            <a class="image" href={optimizedImage.src}>
-              <Image src={image} height="100" alt="Astro Multiverse" />
-            </a>
-          </article>
-        )
-      })
-    }
-  </div>
-
-  <ul>
-    {
-      imgs.map(img => (
-        <li>
-          <img src={img.default.src} alt='ccc' class="object-cover"/>
-        </li>
-      ))
-    }
-  </ul>
-
+      }
+      </section>
+		</div>
+	</section>
 </Layout>
+
+<script>
+	import '@/lib/photo-grid';
+</script>

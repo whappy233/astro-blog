@@ -64,7 +64,7 @@ const gallery = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
-      assets: z.string(),
+      assetsName: z.string(),
       image: image().optional(),
       date: z.coerce.date(),
       published: z.boolean().default(true),

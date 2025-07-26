@@ -21,6 +21,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   site: 'https://astro-erudite.vercel.app',
+  base: '/',
   integrations: [
     expressiveCode({
       themes: ['github-light', 'github-dark'],

@@ -1,6 +1,6 @@
 ---
 name: 'gallery-1'
-assets: './assets/gallery-1'
-image: './assets/gallery-1/像素_猫.png'
+assetsName: 'gallery-1'
+image: './assets/gallery-1/nature-1.jpg'
 date: 2023-06-01
 ---
